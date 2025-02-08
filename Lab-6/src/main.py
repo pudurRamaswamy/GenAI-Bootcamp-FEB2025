@@ -1,6 +1,5 @@
 import streamlit as st
 from streamlit_chat import message
-from dotenv import load_dotenv
 from src.validate import validate_openai_key
 from src.chat_interface import text_based
 from src.model import vectorstore
