@@ -35,7 +35,7 @@ with imcol2:
 #     st.write("# ")
 
 st.markdown("<p style='text-align: center; color: black; font-size:25px;'><span style='font-weight: bold'></span>File Upload and Data Preview.</p>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: blue;margin-top: -10px ;font-size:20px;'><span style='font-weight: bold'></span>Save time, increase accuracy, and avoid mistakes when entering data.</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: blue;margin-top: -10px ;font-size:20px;'><span style='font-weight: bold'></span>GEN AI Bootcamp FEB-2025.</p>", unsafe_allow_html=True)
 st.markdown("<hr style=height:2.5px;margin-top:0px;width:100%;background-color:gray;>",unsafe_allow_html=True)
 
     
