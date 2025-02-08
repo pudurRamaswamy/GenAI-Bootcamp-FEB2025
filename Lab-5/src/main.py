@@ -1,15 +1,11 @@
 import streamlit as st
 from streamlit_chat import message
-from dotenv import load_dotenv
 from src.validate import validate_openai_key
 from src.chat_interface import text_based
 from src.model import vectorstore
 import pandas as pd
 import openai
 import os
-
-# Load environment variables
-# load_dotenv()
 
 # Streamlit app main function
 def main_ui():
