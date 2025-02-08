@@ -1,14 +1,8 @@
 import streamlit as st
-from streamlit_chat import message
-from dotenv import load_dotenv
-import matplotlib.pyplot as plt
 import pandas as pd
-# Load environment variables
-load_dotenv()
 
 # Streamlit app main function
 def main():
-
     col1, col2, col3, col4 = st.columns((1, 3, 3.5, 2.5))
     c1, c2, c3 = st.columns((1, 6.5, 2.5))
 
