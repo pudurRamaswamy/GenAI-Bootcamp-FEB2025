@@ -1,9 +1,7 @@
 import streamlit as st
 from streamlit_chat import message
-from dotenv import load_dotenv
 from src.validate import validate_openai_key
 from src.chat_interface import text_based
-import matplotlib.pyplot as plt
 import pandas as pd
 import openai
 # Load environment variables
