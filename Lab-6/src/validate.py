@@ -5,6 +5,7 @@ def validate_openai_key(api_key):
     try:
         client = openai.Client(api_key=api_key)  # Use Client instance
         client.models.list()  # Making a request to check key validity
+        os.environ["OPENAI_API_KEY"] = api_key
         return "Valid API Key!"
     except openai.AuthenticationError:
         return "Invalid API Key! Authentication failed."
