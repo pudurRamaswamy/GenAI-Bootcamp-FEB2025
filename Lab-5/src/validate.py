@@ -1,4 +1,5 @@
 import openai
+import os
 
 def validate_openai_key(api_key):
     """Validate the OpenAI API key by making a test request."""
