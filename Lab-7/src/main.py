@@ -49,8 +49,8 @@ def main_ui():
             if vAR_kb_type == "PDF":
                 with col2:
                     st.write('## ')
-                    st.write("## ")
-                    st.write("## ")
+                    st.write("### ")
+                    st.write("### ")
                     st.markdown(
                         "<p style='text-align: left; color: black; font-size:20px;'><span style='font-weight: bold'>Upload KnowledgeBase</span></p>", 
                         unsafe_allow_html=True
@@ -66,8 +66,8 @@ def main_ui():
             if vAR_kb_type == "CSV":
                 with col2:
                     st.write('## ')
-                    st.write("## ")
-                    st.write("## ")
+                    st.write("### ")
+                    st.write("### ")
                     st.markdown(
                         "<p style='text-align: left; color: black; font-size:20px;'><span style='font-weight: bold'>Upload KnowledgeBase</span></p>", 
                         unsafe_allow_html=True
