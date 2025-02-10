@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_chat import message
 from src.validate import validate_openai_key
 from src.chat_interface import text_based
-from src.model import vectorstore
+from src.model import csv_agent
 import pandas as pd
 import openai
 import os
@@ -46,7 +46,7 @@ def main_ui():
                 st.write("### ")
                 uploaded_file  = st.file_uploader("", type='csv', key="fileupload")
             if uploaded_file:
-                vAR_DB=vectorstore(uploaded_file, vAR_api_key)
+                vAR_DB=csv_agent(uploaded_file, vAR_api_key)
                 text_based(vAR_api_key, vAR_DB)
            
         
