@@ -5,7 +5,7 @@ from langchain_experimental.agents import create_csv_agent
 from langchain.chat_models import ChatOpenAI
 import pandas as pd
 
-def vectorstore(uploaded_file, vAR_api_key):   
+def csv_agent(uploaded_file, vAR_api_key):   
     uploaded_file.seek(0)  # Reset pointer before reading
     try:
         df = pd.read_csv(uploaded_file, encoding="utf-8")  # Read for display only
