@@ -51,56 +51,62 @@ def main():
             if model_option != "Select":
                 st.write("")
                 if st.button("Train the Model", key="train_button"):
-                    train_data.fillna(train_data.median(numeric_only=True), inplace=True)
-                    train_data.fillna(train_data.mode().iloc[0], inplace=True)
-                    # Encode categorical variables
-                    label_encoders = {}
-                    for column in train_data.select_dtypes(include=['object']).columns:
-                        le = LabelEncoder()
-                        train_data[column] = le.fit_transform(train_data[column])
-                        label_encoders[column] = le 
-                    
-                    # Split into features and target
-                    X = train_data.drop(columns=[' loan_status'])  
-                    y = train_data[' loan_status']
+                    try:
+                        train_data.fillna(train_data.median(numeric_only=True), inplace=True)
+                        train_data.fillna(train_data.mode().iloc[0], inplace=True)
+                        # Encode categorical variables
+                        label_encoders = {}
+                        for column in train_data.select_dtypes(include=['object']).columns:
+                            le = LabelEncoder()
+                            train_data[column] = le.fit_transform(train_data[column])
+                            label_encoders[column] = le 
+                        
+                        # Split into features and target
+                        X = train_data.drop(columns=[' loan_status'])  
+                        y = train_data[' loan_status']
 
-                    # Standardize numerical features
-                    scaler = StandardScaler()
-                    X_scaled = scaler.fit_transform(X)
+                        # Standardize numerical features
+                        scaler = StandardScaler()
+                        X_scaled = scaler.fit_transform(X)
 
-                    # Split into training and validation sets
-                    X_train, X_valid, y_train, y_valid = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+                        # Split into training and validation sets
+                        X_train, X_valid, y_train, y_valid = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
-                    # Train a Random Forest Classifier
-                    model = RandomForestClassifier(n_estimators=100, random_state=42)
-                    model.fit(X_train, y_train)
+                        # Train a Random Forest Classifier
+                        model = RandomForestClassifier(n_estimators=100, random_state=42)
+                        model.fit(X_train, y_train)
 
-                    # Predictions on validation set
-                    y_pred = model.predict(X_valid)
-                    st.success("Model Trained Successfully")
-                    accuracy = accuracy_score(y_valid, y_pred)
-                    st.session_state.train_button_clicked = True
+                        # Predictions on validation set
+                        y_pred = model.predict(X_valid)
+                        st.success("Model Trained Successfully")
+                        accuracy = accuracy_score(y_valid, y_pred)
+                        st.session_state.train_button_clicked = True
+                    except BaseException as e:
+                        st.error("Upload the correct data file")
 
     # Step 3: Upload Test Data (only appears after model training)
     if st.session_state.train_button_clicked:
-        with n1:
-            st.write("### ")
-            st.write("### ")
-            # st.write("### ")
-            # st.write("### ")
-            st.markdown("<p style='text-align: left; color: black; font-size:20px;'><span style='font-weight: bold'>Upload Test Data</span></p>", unsafe_allow_html=True)
+        try:
+            with n1:
+                st.write("### ")
+                st.write("### ")
+                # st.write("### ")
+                # st.write("### ")
+                st.markdown("<p style='text-align: left; color: black; font-size:20px;'><span style='font-weight: bold'>Upload Test Data</span></p>", unsafe_allow_html=True)
 
-        with n2:
-            test_file = st.file_uploader("Upload CSV", type=["csv"], key="test")
-        if test_file:
-            test_data = pd.read_csv(test_file)
-            with c4:
-                st.subheader("Preview of Test Data")
-                st.write(test_data.head())
-            with col7:
-                if st.button("Test the Model", key="test_button"):
-                   st.session_state.test_button_clicked = True
-                   st.success("Model Accuracy:"+ str(accuracy))
+            with n2:
+                test_file = st.file_uploader("Upload CSV", type=["csv"], key="test")
+            if test_file:
+                test_data = pd.read_csv(test_file)
+                with c4:
+                    st.subheader("Preview of Test Data")
+                    st.write(test_data.head())
+                with col7:
+                    if st.button("Test the Model", key="test_button"):
+                        st.session_state.test_button_clicked = True
+                        st.success("Model Accuracy:"+ str(accuracy))
+        except BaseException as e:
+            st.error("Upload the correct data file")
     
     if st.session_state.test_button_clicked:
         with col7:
@@ -108,23 +114,26 @@ def main():
                 st.session_state.predict_button_clicked = True
 
             if st.session_state.predict_button_clicked:
-                # Display predictions
-                with c6:
-                    for column in test_data.select_dtypes(include=['object']).columns:
-                        if column in label_encoders:
-                            test_data[column] = label_encoders[column].transform(test_data[column])
-                    # Standardize test data
-                    X_test_scaled = scaler.transform(test_data)
+                try:
+                    # Display predictions
+                    with c6:
+                        for column in test_data.select_dtypes(include=['object']).columns:
+                            if column in label_encoders:
+                                test_data[column] = label_encoders[column].transform(test_data[column])
+                        # Standardize test data
+                        X_test_scaled = scaler.transform(test_data)
 
-                    # Predict on test data
-                    test_predictions = model.predict(X_test_scaled)
+                        # Predict on test data
+                        test_predictions = model.predict(X_test_scaled)
 
-                    # Add predictions to the original test dataset
-                    test_data['Predicted_Loan_Status'] = test_predictions
+                        # Add predictions to the original test dataset
+                        test_data['Predicted_Loan_Status'] = test_predictions
 
-                    # Map the predictions (assuming 1 = Approved, 0 = Rejected)
-                    test_data['Predicted_Loan_Status'] = test_data['Predicted_Loan_Status'].map({1: 'Approved', 0: 'Rejected'})
+                        # Map the predictions (assuming 1 = Approved, 0 = Rejected)
+                        test_data['Predicted_Loan_Status'] = test_data['Predicted_Loan_Status'].map({1: 'Approved', 0: 'Rejected'})
 
-                    test_data.drop(columns=['loan_id'])
-                    # Display the final output
-                    st.dataframe(test_data)
+                        test_data.drop(columns=['loan_id'])
+                        # Display the final output
+                        st.dataframe(test_data)
+                except BaseException as e:
+                    st.error("Upload the correct data file")
