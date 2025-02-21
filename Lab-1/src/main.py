@@ -35,7 +35,7 @@ def main():
                         st.dataframe(data)
 
         except Exception as e:
-            st.error(f"Error reading file: {e}")
+            st.error("Error in reading file")
 
 
         
