@@ -67,5 +67,8 @@ with st.sidebar:
         st.image("image/AzureCloud_img.png")
 
 
-if vAR_AI_application == "Lab-6":
-    main_ui()
+try:
+    if vAR_AI_application == "Lab-6":
+        main_ui()
+except BaseException as e:
+    st.error("An error occurred. Kindly contact the technical support team.")
